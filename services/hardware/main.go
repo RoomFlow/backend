@@ -13,8 +13,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// Initialize new kafka consumer
-	err = helpers.NewArduinoConsumer()
+	// Initialize new PubSub receiver
+	err = helpers.NewPubSubReceive()
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -12,18 +12,16 @@ Follow instructions outlined here: <https://golang.org/dl/>
 
 ## Notes about the `hardware` service
 
-### Kafka
+### Google Cloud Platform authentication
 
-Kafka needs to be running locally on `localhost:9092` in order for the service to work
+Ask Karlo for the authentication file which was not pushed to the repo and place it in the `secrets` directory. 
 
-Follow steps 1-4 in order to create a Zookeeper server, Kafka server, topic, and to send messages via producer: <https://kafka.apache.org/quickstart>
+Next, you will need to run `export GOOGLE_APPLICATION_CREDENTIALS=<PATH_TO_BACKEND_REPO>/backend/secrets/roomflow-service-account.json`.
 
-Be sure to create the topic `sensors` and produce to it instead of the one in the quickstart link.
+The authentication file will be automatically detected and used.
 
-### Firebase
+### Google Cloud PubSub
 
-Ask Karlo for the Firebase authentication file which was not pushed to the repo and place it in the `secrets` directory.
+PubSub is Kafka as a Service as implemented by Google Cloud Platform (GCP).
 
-Here is a sample message that can be sent to the producer `{"room":"bsb-101","content":{"sound":"123","motion":"on"}}`.
-
-This creates a document in the `bsb-101` collection with the fields `sound:"123"` and `motion:"on"`.
+Here is a sample message that can be execute in a GCP console `gcloud pubsub topics publish sensors --message '{"room":"bsb-102","content":{"sound":"123","motion":"on"}}'` (make sure you have switched to use the RoomFlow project on GCP).
