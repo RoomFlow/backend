@@ -4,4 +4,4 @@ package config
 var ProjectID string = "roomflow-e2004"
 
 // SubID is the Google Cloud Pub/Sub subscription ID
-var SubID string = "sensors-sub"
+var SubID string = "atest-sub"
