@@ -1,0 +1,33 @@
+syntax = "proto3";
+package v1;
+
+message Login {
+    // User's email address
+    string email = 2;
+    // User's password
+    string password = 3;
+}
+
+// Request data to login
+message LoginRequest{
+    // API versioning
+    string api = 1;
+
+    // Login entity
+    Login login = 2;
+}
+
+// Response that contains login status data
+message LoginResponse{
+    // API versioning
+    string api = 1;
+
+    // Status code for a successful login
+    string status = 2;
+}
+
+// Service to manage login
+service AuthenticationService {
+    // a login attempt.
+    rpc Login(LoginRequest) returns (LoginResponse);
+}
