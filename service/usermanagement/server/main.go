@@ -11,10 +11,6 @@ import (
 	userManagement "github.com/RoomFlow/backend/proto/usermanagement"
 )
 
-const (
-	port = ":50051"
-)
-
 type Config struct {
 	GRPCPort string
 }
