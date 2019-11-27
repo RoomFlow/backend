@@ -1,15 +1,15 @@
 language: go
 
+env:
+  global:
+    - PROTOBUF_VERSION=3.11.0
+
 install:
   - go get -v -d google.golang.org/grpc
-  - go get -v -d -t github.com/golang/protobuf/...
-  - curl -L https://github.com/google/protobuf/releases/download/v3.11.0/protoc-3.11.0-linux-x86_64.zip -o /tmp/protoc.zip
-  - unzip /tmp/protoc.zip -d "$HOME"/protoc
-  - mkdir -p "$HOME"/src && ln -s "$HOME"/protoc "$HOME"/src/protobuf
-
-env:
-  - PATH=$HOME/protoc/bin:$PATH
-
+  - go get -v -d -t github.com/golang/protobuf/protoc-gen-go
+  - curl -LO "https://github.com/google/protobuf/releases/download/v${PROTOBUF_VERSION}/protoc-${PROTOBUF_VERSION}-linux-x86_64.zip"
+  - unzip "protoc-${PROTOBUF_VERSION}-linux-x86_64.zip" -d protoc
+  - export PATH="$(pwd)/protoc/bin:$PATH"
 
 before_script:
   - proto/generate_proto.sh
