@@ -6,7 +6,7 @@ GOCLEAN=$(GOCMD) clean
 all: build
 
 build:
-	$(GOBUILD) service/usermanagement/server/main.go
+	$(GOBUILD) services/usermanagement/server/main.go
 
 clean:
 	$(GOCLEAN)
