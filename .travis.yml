@@ -2,19 +2,18 @@ language: go
 
 env:
   - PATH=$HOME/protoc/bin:$PATH
+  - PATH=$HOME/go/bin:$PATH
 
 install:
   - go get -v -d google.golang.org/grpc
-  - go get -v -d -t github.com/golang/protobuf/...
+  - go get -v -d -t github.com/golang/protobuf/proto
+  - go get -v -d -t github.com/golang/protobuf/protoc-gen-go
   - curl -L https://github.com/google/protobuf/releases/download/v3.6.1/protoc-3.6.1-linux-x86_64.zip -o /tmp/protoc.zip
   - unzip /tmp/protoc.zip -d "$HOME"/protoc
   - mkdir -p "$HOME"/src && ln -s "$HOME"/protoc "$HOME"/src/protobuf
 
-  - export GOPATH="$HOME/go"
-  - export GOBIN="$GOPATH/bin"
-  - export PATH="$PATH:$GOBIN"
-
 before_script:
+  - ls $HOME/go/bin
   - which protoc
   - which protoc-gen-go
   - protoc -I ./ proto/usermanagement/user_management.proto --go_out=plugins=grpc:./
