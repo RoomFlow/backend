@@ -1,5 +1,8 @@
 language: go
 
+go:
+  - 1.13.x
+
 install:
   - go get -u google.golang.org/grpc
   - scripts/install_protobuf.sh
