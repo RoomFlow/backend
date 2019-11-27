@@ -10,3 +10,4 @@ sudo cp -r ./tmp/include /usr/local/.
 sudo chmod 755 /usr/local/bin/protoc
 sudo chmod -R 755 /usr/local/include/google
 export PATH=$HOME/go/bin:$PATH
+export PATH=$HOME/protoc/bin:$PATH
