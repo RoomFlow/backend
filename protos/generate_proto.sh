@@ -1,1 +1,0 @@
-protoc -I ./ protos/usermanagement/user_management.proto --go_out=plugins=grpc:./

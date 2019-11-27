@@ -5,7 +5,7 @@ install:
   - scripts/install_protobuf.sh
 
 before_script:
-  - protos/generate_proto.sh
+  - proto/generate_proto.sh
 
 script:
   - make all
