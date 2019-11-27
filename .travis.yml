@@ -5,15 +5,15 @@ env:
     - PROTOBUF_VERSION=3.11.0
 
 install:
-  - export GOPATH="$HOME/go"
-  - export GOBIN="$GOPATH/bin"
-  - export PATH="$PATH:$GOBIN"
-  
   - go get -v -d google.golang.org/grpc
   - go get -v -d -t github.com/golang/protobuf/protoc-gen-go
   - curl -LO "https://github.com/google/protobuf/releases/download/v${PROTOBUF_VERSION}/protoc-${PROTOBUF_VERSION}-linux-x86_64.zip"
   - unzip "protoc-${PROTOBUF_VERSION}-linux-x86_64.zip" -d protoc
   - export PATH="$(pwd)/protoc/bin:$PATH"
+
+  - export GOPATH="$HOME/go"
+  - export GOBIN="$GOPATH/bin"
+  - export PATH="$PATH:$GOBIN"
 
 before_script:
   - proto/generate_proto.sh
