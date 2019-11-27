@@ -1,1 +1,1 @@
-$GOPATH/bin/protoc -I ./ proto/usermanagement/user_management.proto --go_out=plugins=grpc:./
+protoc -I ./ proto/usermanagement/user_management.proto --go_out=plugins=grpc:./
