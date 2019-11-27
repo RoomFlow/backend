@@ -2,7 +2,7 @@ language: go
 
 install:
   - go get -u google.golang.org/grpc
-  - script/install_protobuf.sh
+  - scripts/install_protobuf.sh
 
 before_script:
   - proto/generate_proto.sh
