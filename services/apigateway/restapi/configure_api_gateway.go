@@ -43,17 +43,62 @@ func configureAPI(api *operations.APIGatewayAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	if api.LoginPostLoginHandler == nil {
-		api.LoginPostLoginHandler = login.PostLoginHandlerFunc(func(params login.PostLoginParams) middleware.Responder {
-			return middleware.NotImplemented("operation login.PostLogin has not yet been implemented")
+
+	api.LoginPostLoginHandler = login.PostLoginHandlerFunc(func(params login.PostLoginParams) middleware.Responder {
+		// Set up a connection to the server.
+		conn, err := grpc.Dial("localhost:8080", grpc.WithInsecure(), grpc.WithBlock())
+		if err != nil {
+			log.Fatalf("did not connect: %v", err)
+		}
+		defer conn.Close()
+		c := userManagement.NewUserManagementClient(conn)
+
+
+		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+		defer cancel()
+
+		loginResponse, loginErr := c.LoginUser(ctx, &userManagement.LoginRequest{
+			Username: *params.Body.Username,
+			Password: *params.Body.Password,
 		})
-	}
+
+		if loginErr != nil {
+			log.Fatalf("could not login: %v", loginErr)
+			return login.NewPostLoginDefault(401)
+		} else {
+			log.Printf("Login token: %s", loginResponse.GetToken())
+			token := loginResponse.GetToken()
+			return login.NewPostLoginOK().WithPayload(&models.Token{Accesstoken: &token})
+		}
+	})
 	
-	if api.RegisterPostRegisterHandler == nil {
-		api.RegisterPostRegisterHandler = register.PostRegisterHandlerFunc(func(params register.PostRegisterParams) middleware.Responder {
-			return middleware.NotImplemented("operation register.PostRegister has not yet been implemented")
+	api.RegisterPostRegisterHandler = register.PostRegisterHandlerFunc(func(params register.PostRegisterParams) middleware.Responder {
+		// Set up a connection to the server.
+		conn, err := grpc.Dial("localhost:8080", grpc.WithInsecure(), grpc.WithBlock())
+		if err != nil {
+			log.Fatalf("did not connect: %v", err)
+		}
+		defer conn.Close()
+		c := userManagement.NewUserManagementClient(conn)
+
+
+		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+		defer cancel()
+
+		registerResponse, registerErr := c.RegisterUser(ctx, &userManagement.RegisterRequest{
+			Username: *params.Body.Username,
+			Password: *params.Body.Password,
 		})
-	}
+
+		if registerErr != nil {
+			log.Fatalf("could not register: %v", registerErr)
+			return register.NewPostRegisterDefault(401)
+		} else {
+			log.Printf("Register token: %s", registerResponse.GetToken())
+			token := registerResponse.GetToken()
+			return register.NewPostRegisterOK().WithPayload(&models.Token{Accesstoken: &token})
+		}
+	})
 
 	api.PreServerShutdown = func() {}
 
