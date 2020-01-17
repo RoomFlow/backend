@@ -5,6 +5,7 @@ go:
 
 install:
   - go get -u google.golang.org/grpc
+  - go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
   - scripts/install_protobuf.sh
 
 before_script:
