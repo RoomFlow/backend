@@ -3,16 +3,17 @@ GOCMD=go
 GOBUILD=$(GOCMD) build
 GOCLEAN=$(GOCMD) clean
 
-all: 
-	build-usermanagement
-	build-apigateway
+all: build_usermanagement build_apigateway
 	
 
-build-usermanagement:
+build_usermanagement:
+	@echo "Building usermanagement server..."
 	$(GOBUILD) services/usermanagement/server/main.go
 
-build-apigateway:
+build_apigateway:
+	@echo "Building apigateway server..."
 	$(GOBUILD) services/apigateway/cmd/main.go
 
 clean:
+	@echo "Cleaning..."
 	$(GOCLEAN)
