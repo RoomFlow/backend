@@ -7,15 +7,17 @@ import (
 	"net"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 
 	userManagement "github.com/RoomFlow/backend/proto/usermanagement"
 )
 
+// Config is the configuration for the server.
 type Config struct {
 	GRPCPort string
 }
 
-
+// userManagementServer is the server object.
 type userManagementServer struct {
 	userManagement.UserManagementServer
 }
@@ -49,7 +51,15 @@ func main() {
 			log.Fatalf("failed to listen: %v", err)
 	}
 
-	grpcServer := grpc.NewServer()
+	// Create server certificates.
+	serverCert, err := credentials.NewServerTLSFromFile("../../../certs/app.crt", "../../../certs/app.key")
+	if err != nil {
+		log.Fatalln("failed to create cert", err)
+	}
+
+	// Create a new server using the created credentials.
+	grpcServer := grpc.NewServer(grpc.Creds(serverCert))
+	// Register the created user management server.
 	userManagement.RegisterUserManagementServer(grpcServer, &userManagementServer{})
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
