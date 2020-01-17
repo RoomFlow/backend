@@ -10,3 +10,6 @@ build:
 
 clean:
 	$(GOCLEAN)
+
+protoc:
+	./internal/proto/generate_proto.sh
