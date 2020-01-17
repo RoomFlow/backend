@@ -2,8 +2,10 @@ package main
 
 import (
 	"context"
-	"github.com/RoomFlow/backend/services/schedule/helpers"
 	"log"
+
+	internal "github.com/RoomFlow/backend/internal/helpers"
+	"github.com/RoomFlow/backend/services/schedule/helpers"
 )
 
 func main() {
@@ -11,7 +13,7 @@ func main() {
 	rooms := helpers.FetchRoomData()
 
 	// Initialize new firestore client
-	client := helpers.NewFirestoreClient()
+	client := internal.NewFirestoreClient()
 	defer client.Close()
 
 	log.Println("Creating new batch write")

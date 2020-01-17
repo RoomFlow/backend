@@ -6,7 +6,7 @@ require (
 	cloud.google.com/go v0.51.0 // indirect
 	cloud.google.com/go/firestore v1.1.1
 	firebase.google.com/go v3.11.1+incompatible
-	github.com/hashicorp/golang-lru v0.5.3 // indirect
+	github.com/golang/protobuf v1.3.2
 	golang.org/x/net v0.0.0-20200114155413-6afb5195e5aa
 	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d // indirect
 	golang.org/x/sys v0.0.0-20200113162924-86b910548bc1 // indirect

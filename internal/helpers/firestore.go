@@ -1,4 +1,4 @@
-package helpers
+package internal
 
 import (
 	"context"
@@ -7,8 +7,6 @@ import (
 	"cloud.google.com/go/firestore"
 	firebase "firebase.google.com/go"
 )
-
-var client *firestore.Client
 
 // NewFirestoreClient returns a connection to the firestore
 func NewFirestoreClient() *firestore.Client {
@@ -24,7 +22,7 @@ func NewFirestoreClient() *firestore.Client {
 	log.Println("Firebase app initialized")
 
 	// Create new firestore client
-	client, err = app.Firestore(ctx)
+	client, err := app.Firestore(ctx)
 	if err != nil {
 		log.Fatalf("app.Firestore(): %v", err)
 	}

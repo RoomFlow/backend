@@ -7,8 +7,6 @@ service UserManagement {
     rpc RegisterUser(RegisterRequest) returns (RegisterResponse) {}
 }
 
-
-
 message LoginRequest {
     string username = 1;
     string password = 2;
