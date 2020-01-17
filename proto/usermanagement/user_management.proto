@@ -2,9 +2,15 @@ syntax="proto3";
 
 package usermanagement;
 
+import "google/api/annotations.proto";
+
 service UserManagement {
-    rpc LoginUser(LoginRequest) returns (LoginResponse) {}
-    rpc RegisterUser(RegisterRequest) returns (RegisterResponse) {}
+    rpc LoginUser(LoginRequest) returns (LoginResponse) {
+        option (google.api.http) = { post: "/v1/usermanagement/login" body: "*" };
+    }
+    rpc RegisterUser(RegisterRequest) returns (RegisterResponse) {
+        option (google.api.http) = { post: "/v1/usermanagement/register" body: "*" };
+    }
 }
 
 
