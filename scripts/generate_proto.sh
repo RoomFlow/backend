@@ -1,5 +1,7 @@
 PROTO_FILE_PATHS=`find internal/proto -name "*.proto"`
 
+find $GOPATH/src -name "grpc-gateway*" | tail -1
+
 for PROTO_FILE_PATH in $PROTO_FILE_PATHS; do
     protoc -I/usr/local/include -I. \
         -I$GOPATH/src \
