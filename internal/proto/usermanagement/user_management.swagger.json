@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "proto/usermanagement/user_management.proto",
+    "title": "internal/proto/usermanagement/user_management.proto",
     "version": "version not set"
   },
   "consumes": [

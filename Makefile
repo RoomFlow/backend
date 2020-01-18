@@ -4,7 +4,6 @@ GOBUILD=$(GOCMD) build
 GOCLEAN=$(GOCMD) clean
 
 all: build_usermanagement build_apigateway
-	
 
 build_usermanagement:
 	@echo "Building usermanagement server..."
@@ -19,4 +18,4 @@ clean:
 	$(GOCLEAN)
 
 protoc:
-	./internal/proto/generate_proto.sh
+	./scripts/generate_proto.sh
