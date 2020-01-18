@@ -19,3 +19,6 @@ clean:
 
 protoc:
 	./scripts/generate_proto.sh
+
+protoc_install:
+	./scripts/install_protobuf.sh
