@@ -6,10 +6,9 @@ import (
 	"log"
 	"time"
 
+	userManagement "github.com/RoomFlow/backend/internal/proto/usermanagement"
 	"google.golang.org/grpc"
-	userManagement "github.com/RoomFlow/backend/proto/usermanagement"
 )
-
 
 func main() {
 	address := flag.String("server", "", "gRPC server in format host:port")
@@ -22,7 +21,6 @@ func main() {
 	}
 	defer conn.Close()
 	c := userManagement.NewUserManagementClient(conn)
-
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()

@@ -9,7 +9,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 
-	userManagement "github.com/RoomFlow/backend/proto/usermanagement"
+	userManagement "github.com/RoomFlow/backend/internal/proto/usermanagement"
 )
 
 // Config is the configuration for the server.
@@ -21,7 +21,6 @@ type Config struct {
 type userManagementServer struct {
 	userManagement.UserManagementServer
 }
-
 
 // Attempts to login a user based on the passed on credentials.
 func (s *userManagementServer) LoginUser(ctx context.Context, request *userManagement.LoginRequest) (*userManagement.LoginResponse, error) {
@@ -48,7 +47,7 @@ func main() {
 
 	lis, err := net.Listen("tcp", cfg.GRPCPort)
 	if err != nil {
-			log.Fatalf("failed to listen: %v", err)
+		log.Fatalf("failed to listen: %v", err)
 	}
 
 	// Create server certificates.

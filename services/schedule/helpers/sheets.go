@@ -9,18 +9,12 @@ import (
 	"google.golang.org/api/option"
 	"google.golang.org/api/sheets/v4"
 
-	"github.com/RoomFlow/backend/config"
+	config "github.com/RoomFlow/backend/internal/config"
+	models "github.com/RoomFlow/backend/internal/models"
 )
 
-// Room represents one room
-type Room struct {
-	ID       string `firestore:"id,omitempty"`
-	RoomType string `firestore:"roomType,omitempty"`
-	Capacity int    `firestore:"capacity,omitempty"`
-}
-
 // FetchRoomData fetches room data from McMaster room directory
-func FetchRoomData() []Room {
+func FetchRoomData() []models.Room {
 	log.Println("Creating new Sheets service")
 
 	// Start new google sheets api service
@@ -33,7 +27,7 @@ func FetchRoomData() []Room {
 	spreadsheetID := config.SpreadsheetID
 
 	// Range of columns to fetch
-	readRange := "ClassroomData!A2:H"
+	readRange := "ClassroomData!A2:EZ"
 
 	log.Println("Fetching spreadsheet data")
 
@@ -44,7 +38,7 @@ func FetchRoomData() []Room {
 	}
 
 	// Return array
-	var rooms []Room
+	var rooms []models.Room
 
 	// Iterate through returned rows
 	for _, row := range resp.Values {
@@ -54,14 +48,45 @@ func FetchRoomData() []Room {
 		// Convert capacity string to int
 		Capacity, err := strconv.Atoi(row[7].(string))
 		if err != nil {
-			log.Printf("Unable to concert capacity string to int: %s\n", err)
+			log.Printf("Unable to convert capacity string to int: %s\n", err)
+		}
+
+		RoomType := strings.ToUpper(strings.ReplaceAll(row[6].(string), " ", "_"))
+
+		Wheelchair := false
+		if len(row[16].(string)) > 0 {
+			Wheelchair = true
+		}
+
+		var Photos []string
+
+		rowLength := len(row)
+
+		if rowLength > 153 {
+			Photos = append(Photos, row[153].(string))
+		}
+
+		if rowLength > 154 {
+			Photos = append(Photos, row[154].(string))
+		}
+
+		if rowLength > 155 {
+			Photos = append(Photos, row[155].(string))
+		}
+
+		Windows := false
+		if len(row[151].(string)) > 0 {
+			Windows = true
 		}
 
 		// Create room struct
-		roomData := Room{
-			ID:       ID,
-			RoomType: row[6].(string),
-			Capacity: Capacity,
+		roomData := models.Room{
+			ID:         ID,
+			RoomType:   RoomType,
+			Capacity:   Capacity,
+			Wheelchair: Wheelchair,
+			Photos:     Photos,
+			Windows:    Windows,
 		}
 
 		// Add room data to array

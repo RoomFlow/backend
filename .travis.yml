@@ -13,7 +13,7 @@ install:
   
 
 before_script:
-  - proto/generate_proto.sh
+  - make protoc
 
 script:
-  - make all
+  - make build

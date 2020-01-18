@@ -17,3 +17,6 @@ build_apigateway:
 clean:
 	@echo "Cleaning..."
 	$(GOCLEAN)
+
+protoc:
+	./internal/proto/generate_proto.sh

@@ -1,0 +1,54 @@
+syntax="proto3";
+
+package search;
+
+service Search {
+    rpc FilterSearch(FilterSearchRequest) returns (FilterSearchResponse) {}
+}
+
+message FilterSearchRequest {
+    Filter filter = 1;
+}
+
+message Filter {
+    Capacity capacity = 1;
+    RoomType roomType = 2;
+    bool wheelchair = 3;
+    bool windows = 4;
+}
+
+message Capacity {
+    int32 size = 1;
+    Comparison comparison = 2;
+}
+
+enum Comparison {
+    LESS_THAN = 0;
+    LESS_THAN_EQUAL_TO = 1;
+    EQUAL_TO = 2;
+    GREATER_THAN_EQUAL_TO = 3;
+    GREATER_THAN = 4;
+}
+
+enum RoomType {
+    ANY = 0;
+    CLASSROOM = 1;
+    LECTURE_THEATRE = 2;
+    DEPARTMENTAL_ROOM = 3;
+    DEPARTMENTAL_LAB = 4;
+    ACTIVE_LEARNING_CLASSROOM = 5;
+    TESTING_CENTRE = 6;
+}
+
+message FilterSearchResponse {
+    repeated Room rooms = 1;
+}
+
+message Room {
+    string ID = 1;
+    int64 Capacity = 2;
+    RoomType RoomType = 3;
+    bool Wheelchair = 4;
+    repeated string Photos = 5;
+    bool Windows = 6;
+}
