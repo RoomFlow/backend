@@ -11,15 +11,15 @@ build_apigateway:
 
 build_usermanagement:
 	@echo "Building usermanagement server..."
-	$(GOBUILD) services/usermanagement/server/main.go
+	$(GOBUILD) services/usermanagement/cmd/main.go
 
 build_search:
 	@echo "Building search server..."
-	$(GOBUILD) services/search/main.go
+	$(GOBUILD) services/search/cmd/main.go
 
 build_schedule:
 	@echo "Building schedule server..."
-	$(GOBUILD) services/schedule/main.go
+	$(GOBUILD) services/schedule/cmd/main.go
 
 clean:
 	@echo "Cleaning..."
