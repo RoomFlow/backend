@@ -5,6 +5,7 @@ import (
 	"net"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 
 	"github.com/RoomFlow/backend/internal/config"
 	internal "github.com/RoomFlow/backend/internal/helpers"
@@ -18,15 +19,21 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
-	// Create a new gRPC server
-	gRPCServer := grpc.NewServer()
+	// Create server certificates.
+	serverCert, err := credentials.NewServerTLSFromFile("internal/certs/app.crt", "internal/certs/app.key")
+	if err != nil {
+		log.Fatalln("failed to create cert", err)
+	}
 
-	log.Printf("Search deployed on: %s\n", config.SearchServicePort)
+	// Create a new server using the created credentials.
+	gRPCServer := grpc.NewServer(grpc.Creds(serverCert))
 
 	// Initialize new firestore client
 	firestoreClient := internal.NewFirestoreClient()
 
 	model.RegisterSearchServer(gRPCServer, &controllers.SearchServer{FirestoreClient: firestoreClient})
+
+	log.Printf("Search deployed on: %s\n", config.SearchServicePort)
 
 	if err := gRPCServer.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)

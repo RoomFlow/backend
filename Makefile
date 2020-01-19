@@ -3,13 +3,30 @@ GOCMD=go
 GOBUILD=$(GOCMD) build
 GOCLEAN=$(GOCMD) clean
 
-all: build
+build: build_usermanagement build_apigateway build_search build_schedule
 
-build:
-	$(GOBUILD) services/usermanagement/server/main.go
+build_apigateway:
+	@echo "Building apigateway server..."
+	$(GOBUILD) services/apigateway/cmd/main.go
+
+build_usermanagement:
+	@echo "Building usermanagement server..."
+	$(GOBUILD) services/usermanagement/cmd/main.go
+
+build_search:
+	@echo "Building search server..."
+	$(GOBUILD) services/search/cmd/main.go
+
+build_schedule:
+	@echo "Building schedule server..."
+	$(GOBUILD) services/schedule/cmd/main.go
 
 clean:
+	@echo "Cleaning..."
 	$(GOCLEAN)
 
 protoc:
-	./internal/proto/generate_proto.sh
+	./scripts/generate_proto.sh
+
+protoc_install:
+	./scripts/install_protobuf.sh

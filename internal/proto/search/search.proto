@@ -2,8 +2,12 @@ syntax="proto3";
 
 package search;
 
+import "google/api/annotations.proto";
+
 service Search {
-    rpc FilterSearch(FilterSearchRequest) returns (FilterSearchResponse) {}
+    rpc FilterSearch(FilterSearchRequest) returns (FilterSearchResponse) {
+        option (google.api.http) = { post: "/v1/search/filtersearch" body: "*" };
+    }
 }
 
 message FilterSearchRequest {

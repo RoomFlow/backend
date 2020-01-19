@@ -4,9 +4,8 @@ go:
   - 1.13.x
 
 install:
-  - go get -u google.golang.org/grpc
-  - scripts/install_protobuf.sh
-
+  - make protoc_install
+  
 before_script:
   - make protoc
 
