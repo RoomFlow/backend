@@ -4,7 +4,7 @@ PROTOC_DOWNLOAD_LOCATION=/tmp/protocDownload/$PROTOC_DOWNLOAD_FILENAME
 
 UNAME_S=`uname -s`
 # Only automatically install protoc if on Linux
-if [ "$UNAME_S" == "Linux" ]; then
+if [ "Linux" == "$UNAME_S" ]; then
     curl -L https://github.com/google/protobuf/releases/download/v{$PROTOBUF_VERSION}/protoc-{$PROTOBUF_VERSION}-linux-x86_64.zip -o $PROTOC_DOWNLOAD_LOCATION && \
     cd $PROTOC_DOWNLOAD_LOCATION && \
     unzip $PROTOC_DOWNLOAD_FILENAME && \
