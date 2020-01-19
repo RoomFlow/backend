@@ -1,3 +1,5 @@
-internal/proto/**/*.go
+**/*.pb.gw.go
+**/*.pb.go
+**/*.swagger.json
 secrets/*
 main
