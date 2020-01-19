@@ -13,13 +13,13 @@ import (
 )
 
 func main() {
-	lis, err := net.Listen("tcp", config.UserManagementServicePort)
+	lis, err := net.Listen("tcp", config.UsermanagementServicePort)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
 	// Create server certificates.
-	serverCert, err := credentials.NewServerTLSFromFile("internal/certs/app.crt", "internal/certs/app.key")
+	serverCert, err := credentials.NewServerTLSFromFile(config.SSLCertPath, config.SSLKeyPath)
 	if err != nil {
 		log.Fatalln("failed to create cert", err)
 	}
@@ -30,7 +30,7 @@ func main() {
 	// Register the created user management server.
 	model.RegisterUserManagementServer(gRPCServer, &controllers.UsermanagementServer{})
 
-	log.Printf("Usermanagement deployed on %s\n", config.UserManagementServicePort)
+	log.Printf("Usermanagement deployed on %s\n", config.UsermanagementServicePort)
 
 	if err := gRPCServer.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)

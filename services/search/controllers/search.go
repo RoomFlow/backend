@@ -14,7 +14,7 @@ type SearchServer struct {
 	FirestoreClient *firestore.Client
 }
 
-// FilterSearch searches based on inputted filter
-func (server *SearchServer) FilterSearch(ctx context.Context, in *model.FilterSearchRequest) (*model.FilterSearchResponse, error) {
-	return services.FilterSearch(ctx, in, server.FirestoreClient)
+// Filter searches based on inputted filter
+func (server *SearchServer) Filter(ctx context.Context, in *model.FilterRequest) (*model.FilterResponse, error) {
+	return services.Filter(ctx, in, server.FirestoreClient)
 }

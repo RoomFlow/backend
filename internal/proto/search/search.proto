@@ -5,12 +5,14 @@ package search;
 import "google/api/annotations.proto";
 
 service Search {
-    rpc FilterSearch(FilterSearchRequest) returns (FilterSearchResponse) {
-        option (google.api.http) = { post: "/v1/search/filtersearch" body: "*" };
+    rpc Filter(FilterRequest) returns (FilterResponse) {
+        option (google.api.http) = { 
+            post: "/v1/search/filter" body: "*" 
+        };
     }
 }
 
-message FilterSearchRequest {
+message FilterRequest {
     Filter filter = 1;
 }
 
@@ -44,7 +46,7 @@ enum RoomType {
     TESTING_CENTRE = 6;
 }
 
-message FilterSearchResponse {
+message FilterResponse {
     repeated Room rooms = 1;
 }
 

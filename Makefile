@@ -6,19 +6,19 @@ GOCLEAN=$(GOCMD) clean
 build: build_usermanagement build_apigateway build_search build_schedule
 
 build_apigateway:
-	@echo "Building apigateway server..."
+	@echo "Building apigateway binary..."
 	$(GOBUILD) services/apigateway/main.go
 
 build_usermanagement:
-	@echo "Building usermanagement server..."
+	@echo "Building usermanagement binary..."
 	$(GOBUILD) services/usermanagement/main.go
 
 build_search:
-	@echo "Building search server..."
+	@echo "Building search binary..."
 	$(GOBUILD) services/search/main.go
 
 build_schedule:
-	@echo "Building schedule server..."
+	@echo "Building schedule binary..."
 	$(GOBUILD) services/schedule/main.go
 
 clean:

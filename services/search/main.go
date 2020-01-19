@@ -20,13 +20,13 @@ func main() {
 	}
 
 	// Create server certificates.
-	serverCert, err := credentials.NewServerTLSFromFile("internal/certs/app.crt", "internal/certs/app.key")
+	creds, err := credentials.NewServerTLSFromFile(config.SSLCertPath, config.SSLKeyPath)
 	if err != nil {
 		log.Fatalln("failed to create cert", err)
 	}
 
 	// Create a new server using the created credentials.
-	gRPCServer := grpc.NewServer(grpc.Creds(serverCert))
+	gRPCServer := grpc.NewServer(grpc.Creds(creds))
 
 	// Initialize new firestore client
 	firestoreClient := internal.NewFirestoreClient()

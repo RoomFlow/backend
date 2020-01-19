@@ -1,10 +1,12 @@
 package main
 
 import (
-	"github.com/RoomFlow/backend/services/apigateway/server"
-	"golang.org/x/net/context"
 	"log"
 	"net/http"
+
+	"github.com/RoomFlow/backend/internal/config"
+	"github.com/RoomFlow/backend/services/apigateway/server"
+	"golang.org/x/net/context"
 )
 
 func main() {
@@ -24,7 +26,7 @@ func main() {
 
 	// listens on the TCP network address and then calls
 	// Serve with handler to handle requests on incoming HTTPS connections.
-	err = http.ListenAndServeTLS(":443", "internal/certs/app.crt", "internal/certs/app.key", serveMux)
+	err = http.ListenAndServeTLS(":443", config.SSLCertPath, config.SSLKeyPath, serveMux)
 	if err != nil {
 		log.Fatalf("Error creating an HTTPS connection : %v", err)
 	}
