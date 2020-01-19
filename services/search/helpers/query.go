@@ -1,6 +1,8 @@
 package helpers
 
 import (
+	"errors"
+	"log"
 	"reflect"
 
 	"cloud.google.com/go/firestore"
@@ -9,14 +11,23 @@ import (
 )
 
 // BuildQuery builds the query based on the filter
-func BuildQuery(collection *firestore.CollectionRef, filter *model.Filter) firestore.Query {
+func BuildQuery(collection *firestore.CollectionRef, filter *model.Filter) (firestore.Query, error) {
+	log.Printf("Building query with filter %v\n", filter)
+
 	// Reflect value
 	filterValue := reflect.ValueOf(filter).Elem()
-	// Reflect value type
-	typeOfFilter := filterValue.Type()
 
 	// Initialize firestore query to append to
 	var query firestore.Query
+
+	if !filterValue.IsValid() {
+		err := errors.New("Filter is not valid")
+		log.Println(err)
+		return query, err
+	}
+
+	// Reflect value type
+	typeOfFilter := filterValue.Type()
 
 	// This is so we can know when to initialize the query based on the collection ref
 	queryInitialized := false
@@ -27,7 +38,8 @@ func BuildQuery(collection *firestore.CollectionRef, filter *model.Filter) fires
 		field := filterValue.Field(i)
 		// Field value interface
 		fieldValue := field.Interface()
-		// Check if filter is not nil
+
+		// Check if filter value is not nil
 		if !field.IsZero() {
 			// Name of field (string)
 			name := typeOfFilter.Field(i).Name
@@ -55,5 +67,11 @@ func BuildQuery(collection *firestore.CollectionRef, filter *model.Filter) fires
 		}
 	}
 
-	return query
+	if queryInitialized {
+		return query, nil
+	}
+
+	err := errors.New("Filter is not valid")
+	log.Println(err)
+	return query, err
 }

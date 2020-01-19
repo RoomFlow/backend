@@ -13,21 +13,26 @@ import (
 	"github.com/RoomFlow/backend/services/search/helpers"
 )
 
-// FilterSearch takes the inputted filters and queries firestore. Returns array of rooms based on filters
-func FilterSearch(ctx context.Context, req *model.FilterSearchRequest, firestoreClient *firestore.Client) (*model.FilterSearchResponse, error) {
+// Filter takes the inputted filters and queries firestore. Returns array of rooms based on filters
+func Filter(ctx context.Context, req *model.FilterRequest, firestoreClient *firestore.Client) (*model.FilterResponse, error) {
 	// Collection reference
 	collRef := firestoreClient.Collection("rooms")
 
 	// Build the query based on the inputted filter
-	query := helpers.BuildQuery(collRef, req.Filter)
+	query, err := helpers.BuildQuery(collRef, req.Filter)
+	if err != nil {
+		return nil, err
+	}
 
-	log.Println(query)
+	log.Printf("Built query: %v\n", query)
 
 	// Initialize query iterator
 	iter := query.Documents(context.TODO())
 
 	// Return variable
 	var rooms []*model.Room
+
+	log.Println("Iterating through query results")
 
 	// Loop through iterator to get all resulting documents
 	for {
@@ -76,8 +81,10 @@ func FilterSearch(ctx context.Context, req *model.FilterSearchRequest, firestore
 		rooms = append(rooms, &room)
 	}
 
+	log.Println("Done searching, returning response")
+
 	// Build response
-	res := &model.FilterSearchResponse{
+	res := &model.FilterResponse{
 		Rooms: rooms,
 	}
 

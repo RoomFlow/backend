@@ -6,10 +6,14 @@ import "google/api/annotations.proto";
 
 service UserManagement {
     rpc LoginUser(LoginRequest) returns (LoginResponse) {
-        option (google.api.http) = { post: "/v1/usermanagement/login" body: "*" };
+        option (google.api.http) = { 
+            post: "/v1/usermanagement/login" body: "*" 
+        };
     }
     rpc RegisterUser(RegisterRequest) returns (RegisterResponse) {
-        option (google.api.http) = { post: "/v1/usermanagement/register" body: "*" };
+        option (google.api.http) = { 
+            post: "/v1/usermanagement/register" body: "*" 
+        };
     }
 }
 
