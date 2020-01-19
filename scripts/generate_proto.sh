@@ -1,10 +1,3 @@
-git clone https://github.com/grpc-ecosystem/grpc-gateway.git
-cd grpc-gateway
-sudo cp -R ./protoc-gen-swagger /usr/local/include/.
-sudo chmod -R 755 /usr/local/include/protoc-gen-swagger
-cd ..
-rm -rf grpc-gateway
-
 go get github.com/grpc-ecosystem/grpc-gateway
 go get -u github.com/golang/protobuf/protoc-gen-go
 go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
@@ -20,5 +13,13 @@ for PROTO_FILE_PATH in $PROTO_FILE_PATHS; do
         -I$GOPATH/src \
         -I$GOOGLE_APIS \
         --go_out=plugins=grpc:. \
+        $PROTO_FILE_PATH
+
+    # Create reverse-proxy will be used for api-gateway
+    protoc -I/usr/local/include  -I. \
+        -I$GOPATH/src \
+        -I$GOOGLE_APIS \
+        --grpc-gateway_out=logtostderr=true:. \
         $PROTO_FILE_PATH --swagger_out=json_names_for_fields=true:.
+
 done
