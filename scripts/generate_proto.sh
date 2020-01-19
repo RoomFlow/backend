@@ -1,10 +1,3 @@
-git clone https://github.com/grpc-ecosystem/grpc-gateway.git
-cd grpc-gateway
-sudo cp -R ./protoc-gen-swagger /usr/local/include/.
-sudo chmod -R 755 /usr/local/include/protoc-gen-swagger
-cd ..
-rm -rf grpc-gateway
-
 go get github.com/grpc-ecosystem/grpc-gateway
 go get -u github.com/golang/protobuf/protoc-gen-go
 go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway

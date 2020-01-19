@@ -1,12 +1,11 @@
 package main
 
 import (
-	"net/http"
-	"log"
-	"golang.org/x/net/context"
 	"github.com/RoomFlow/backend/services/apigateway/server"
+	"golang.org/x/net/context"
+	"log"
+	"net/http"
 )
-
 
 func main() {
 	ctx := context.Background()
@@ -21,11 +20,11 @@ func main() {
 
 	// Create a new ServeMux.
 	serveMux := http.NewServeMux()
-	
+
 	// Registers the handler for the given pattern.
 	serveMux.Handle("/", gateway)
 
-	// listens on the TCP network address and then calls 
+	// listens on the TCP network address and then calls
 	// Serve with handler to handle requests on incoming HTTPS connections.
 	err = http.ListenAndServeTLS(":443", "../../../certs/app.crt", "../../../certs/app.key", serveMux)
 	if err != nil {
