@@ -3,7 +3,7 @@ GOCMD=go
 GOBUILD=$(GOCMD) build
 GOCLEAN=$(GOCMD) clean
 
-build: build_usermanagement build_apigateway
+build: build_usermanagement build_apigateway build_search build_schedule
 
 build_apigateway:
 	@echo "Building apigateway server..."

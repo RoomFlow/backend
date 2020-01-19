@@ -1,5 +1,6 @@
 **/*.pb.gw.go
 **/*.pb.go
 **/*.swagger.json
-secrets/*
+**/secrets/*
 main
+.DS_Store

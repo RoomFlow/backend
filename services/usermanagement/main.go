@@ -8,13 +8,12 @@ import (
 	"google.golang.org/grpc/credentials"
 
 	"github.com/RoomFlow/backend/internal/config"
-	internal "github.com/RoomFlow/backend/internal/helpers"
-	model "github.com/RoomFlow/backend/internal/proto/search"
-	"github.com/RoomFlow/backend/services/search/controllers"
+	model "github.com/RoomFlow/backend/internal/proto/usermanagement"
+	"github.com/RoomFlow/backend/services/usermanagement/controllers"
 )
 
 func main() {
-	lis, err := net.Listen("tcp", config.SearchServicePort)
+	lis, err := net.Listen("tcp", config.UserManagementServicePort)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
@@ -28,12 +27,10 @@ func main() {
 	// Create a new server using the created credentials.
 	gRPCServer := grpc.NewServer(grpc.Creds(serverCert))
 
-	// Initialize new firestore client
-	firestoreClient := internal.NewFirestoreClient()
+	// Register the created user management server.
+	model.RegisterUserManagementServer(gRPCServer, &controllers.UsermanagementServer{})
 
-	model.RegisterSearchServer(gRPCServer, &controllers.SearchServer{FirestoreClient: firestoreClient})
-
-	log.Printf("Search deployed on: %s\n", config.SearchServicePort)
+	log.Printf("Usermanagement deployed on %s\n", config.UserManagementServicePort)
 
 	if err := gRPCServer.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
