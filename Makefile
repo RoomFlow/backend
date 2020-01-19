@@ -7,19 +7,19 @@ build: build_usermanagement build_apigateway build_search build_schedule
 
 build_apigateway:
 	@echo "Building apigateway server..."
-	$(GOBUILD) services/apigateway/cmd/main.go
+	$(GOBUILD) services/apigateway/main.go
 
 build_usermanagement:
 	@echo "Building usermanagement server..."
-	$(GOBUILD) services/usermanagement/cmd/main.go
+	$(GOBUILD) services/usermanagement/main.go
 
 build_search:
 	@echo "Building search server..."
-	$(GOBUILD) services/search/cmd/main.go
+	$(GOBUILD) services/search/main.go
 
 build_schedule:
 	@echo "Building schedule server..."
-	$(GOBUILD) services/schedule/cmd/main.go
+	$(GOBUILD) services/schedule/main.go
 
 clean:
 	@echo "Cleaning..."
