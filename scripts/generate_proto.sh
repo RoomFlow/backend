@@ -1,5 +1,7 @@
 PROTO_FILE_PATHS=`find internal/proto -name "*.proto"`
 
+go list -m -f '{{.Dir}}' github.com/grpc-ecosystem/grpc-gateway
+
 GRPC_GATEWAY_PATH=`find $GOPATH/pkg/mod/github.com/grpc-ecosystem -name "grpc-gateway*" | tail -1`
 GOOGLE_APIS=$GRPC_GATEWAY_PATH/third_party/googleapis
 
