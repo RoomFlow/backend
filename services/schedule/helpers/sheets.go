@@ -9,8 +9,8 @@ import (
 	"google.golang.org/api/option"
 	"google.golang.org/api/sheets/v4"
 
-	config "github.com/RoomFlow/backend/internal/config"
-	models "github.com/RoomFlow/backend/internal/models"
+	models "github.com/RoomFlow/backend/pkg/models"
+	config "github.com/RoomFlow/backend/pkg/config"
 )
 
 // FetchRoomData fetches room data from McMaster room directory

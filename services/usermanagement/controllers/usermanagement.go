@@ -4,9 +4,10 @@ package controllers
 import (
 	"context"
 
-	model "github.com/RoomFlow/backend/internal/proto/usermanagement"
+	model "github.com/RoomFlow/backend/pkg/proto/usermanagement"
 )
 
+// UsermanagementServer is the server struct
 type UsermanagementServer struct {
 }
 

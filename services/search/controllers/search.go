@@ -5,7 +5,7 @@ import (
 	"context"
 
 	"cloud.google.com/go/firestore"
-	model "github.com/RoomFlow/backend/internal/proto/search"
+	model "github.com/RoomFlow/backend/pkg/proto/search"
 	"github.com/RoomFlow/backend/services/search/services"
 )
 

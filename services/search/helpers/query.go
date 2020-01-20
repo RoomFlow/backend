@@ -7,7 +7,7 @@ import (
 
 	"cloud.google.com/go/firestore"
 
-	model "github.com/RoomFlow/backend/internal/proto/search"
+	model "github.com/RoomFlow/backend/pkg/proto/search"
 )
 
 // BuildQuery builds the query based on the filter
