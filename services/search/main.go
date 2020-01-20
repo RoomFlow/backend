@@ -7,9 +7,9 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 
-	"github.com/RoomFlow/backend/internal/config"
-	internal "github.com/RoomFlow/backend/internal/helpers"
-	model "github.com/RoomFlow/backend/internal/proto/search"
+	"github.com/RoomFlow/backend/pkg/config"
+	internal "github.com/RoomFlow/backend/pkg/helpers"
+	model "github.com/RoomFlow/backend/pkg/proto/search"
 	"github.com/RoomFlow/backend/services/search/controllers"
 )
 
@@ -20,7 +20,7 @@ func main() {
 	}
 
 	// Create server certificates.
-	creds, err := credentials.NewServerTLSFromFile(config.SSLCertPath, config.SSLKeyPath)
+	creds, err := credentials.NewServerTLSFromFile(config.SSLCertPath(config.SearchServiceName), config.SSLKeyPath(config.SearchServiceName))
 	if err != nil {
 		log.Fatalln("failed to create cert", err)
 	}

@@ -3,7 +3,12 @@ GOCMD=go
 GOBUILD=$(GOCMD) build
 GOCLEAN=$(GOCMD) clean
 
-build: build_usermanagement build_apigateway build_search build_schedule
+build: build_apigateway build_usermanagement build_search build_schedule
+
+buildLinux:
+	cd services/apigateway && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o ./main-alpine
+	cd services/search && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o ./main-alpine
+	cd services/usermanagement && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o ./main-alpine
 
 build_apigateway:
 	@echo "Building apigateway binary..."

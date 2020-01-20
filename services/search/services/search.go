@@ -9,7 +9,7 @@ import (
 	"cloud.google.com/go/firestore"
 	"google.golang.org/api/iterator"
 
-	model "github.com/RoomFlow/backend/internal/proto/search"
+	model "github.com/RoomFlow/backend/pkg/proto/search"
 	"github.com/RoomFlow/backend/services/search/helpers"
 )
 

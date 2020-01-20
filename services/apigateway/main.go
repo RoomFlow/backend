@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/RoomFlow/backend/internal/config"
+	"github.com/RoomFlow/backend/pkg/config"
 	"github.com/RoomFlow/backend/services/apigateway/server"
 	"golang.org/x/net/context"
 )
@@ -22,11 +22,11 @@ func main() {
 	// Registers the handler for the given pattern.
 	serveMux.Handle("/", gateway)
 
-	log.Println("Apigateway deployed on port 443")
+	log.Printf("Apigateway deployed on port %s\n", config.ApigatewayPort)
 
 	// listens on the TCP network address and then calls
 	// Serve with handler to handle requests on incoming HTTPS connections.
-	err = http.ListenAndServeTLS(":443", config.SSLCertPath, config.SSLKeyPath, serveMux)
+	err = http.ListenAndServeTLS(config.ApigatewayPort, config.SSLCertPath(config.ApigatewayName), config.SSLKeyPath(config.ApigatewayName), serveMux)
 	if err != nil {
 		log.Fatalf("Error creating an HTTPS connection : %v", err)
 	}

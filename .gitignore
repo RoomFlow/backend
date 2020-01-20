@@ -3,4 +3,5 @@
 **/*.swagger.json
 **/secrets/*
 main
+main-alpine
 .DS_Store
