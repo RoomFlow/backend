@@ -71,8 +71,22 @@ processline () {
   fi
 }
 
-# Find files changed between master and current commit
-git diff --name-only origin/HEAD -- | while read line; do
-  processline $line
-  echo "-"
-done
+
+echo "Commit range ${TRAVIS_COMMIT_RANGE}"
+
+if [[ $TRAVIS_COMMIT_RANGE != *"..."* ]]; then
+  # Unfortunately we don't always get a commit range from circleci.
+  # Walk through each changed file within the commit.
+  echo "No commit range? (${TRAVIS_COMMIT_RANGE})"
+  git diff-tree --no-commit-id --name-only -r $TRAVIS_COMMIT_RANGE | while read line; do
+    processline $line
+    echo "-"
+  done
+else
+  # Walk through each changed file within the commit range.
+  echo "Proper commit range = ${TRAVIS_COMMIT_RANGE}"
+  git diff --name-only $TRAVIS_COMMIT_RANGE | while read line; do
+    processline $line
+    echo "-"
+  done
+fi
