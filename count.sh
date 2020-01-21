@@ -72,9 +72,6 @@ processline () {
 }
 
 
-echo "Commit range HEAD...${TRAVIS_BRANCH}"
-
-COMMIT_RANGE=
 
 git diff --name-only HEAD...$TRAVIS_BRANCH | while read line; do
   processline $line
