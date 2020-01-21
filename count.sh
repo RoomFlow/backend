@@ -1,7 +1,7 @@
 # This is the list of all makefiles that we've already built. We don't include the 
 # root makefile by default.
-# BUILT=`readlink -e ${PWD}/Makefile`
-# echo "${BUILT}" > builtlist
+BUILT=`readlink -e ${PWD}/Makefile`
+echo "${BUILT}" > builtlist
 
 # Main build function. Takes a directory as input.
 build () {
