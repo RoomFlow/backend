@@ -65,7 +65,7 @@ processline () {
       fi
     done
   else
-    # The changed line belongs to either a service or cmd.
+    # The changed line belongs to a service.
     TO_BUILD=`dirname $line`
     build $TO_BUILD
   fi
@@ -73,8 +73,6 @@ processline () {
 
 git remote set-branches --add origin master
 git fetch
-
-echo `git diff --name-only origin/master`
 
 git diff --name-only origin/master | while read line; do
   processline $line
