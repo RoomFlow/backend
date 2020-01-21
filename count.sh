@@ -72,21 +72,11 @@ processline () {
 }
 
 
-echo "Commit range ${TRAVIS_COMMIT_RANGE}"
+echo "Commit range HEAD...${TRAVIS_BRANCH}"
 
-if [[ $TRAVIS_COMMIT_RANGE != *"..."* ]]; then
-  # Unfortunately we don't always get a commit range from circleci.
-  # Walk through each changed file within the commit.
-  echo "No commit range? (${TRAVIS_COMMIT_RANGE})"
-  git diff-tree --no-commit-id --name-only -r $TRAVIS_COMMIT_RANGE | while read line; do
-    processline $line
-    echo "-"
-  done
-else
-  # Walk through each changed file within the commit range.
-  echo "Proper commit range = ${TRAVIS_COMMIT_RANGE}"
-  git diff --name-only $TRAVIS_COMMIT_RANGE | while read line; do
-    processline $line
-    echo "-"
-  done
-fi
+COMMIT_RANGE=
+
+git diff --name-only HEAD...$TRAVIS_BRANCH | while read line; do
+  processline $line
+  echo "-"
+done
