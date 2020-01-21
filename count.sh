@@ -74,6 +74,8 @@ processline () {
 git remote set-branches --add origin master
 git fetch
 
+echo `git diff --name-only origin/master`
+
 git diff --name-only origin/master | while read line; do
   processline $line
   echo "-"
