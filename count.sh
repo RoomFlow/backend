@@ -85,12 +85,7 @@ processline () {
   fi
 }
 
-MASTER_COMMIT_ID=`git rev-parse master`
-CURRENT_COMMIT_ID=`git rev-parse HEAD`
-
-FILES=`git diff --name-only $MASTER_COMMIT_ID $CURRENT_COMMIT_ID`
-
-git diff --name-only $MASTER_COMMIT_ID $CURRENT_COMMIT_ID | while read line; do
+git diff --name-only origin/HEAD $TRAVIS_COMMIT | while read line; do
   processline $line
   echo "-"
 done
