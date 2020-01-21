@@ -11,3 +11,5 @@ before_script:
 
 script:
   - make build
+  - ./count.sh
+  - cat built
