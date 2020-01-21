@@ -21,6 +21,7 @@ message Filter {
     RoomType roomType = 2;
     bool wheelchair = 3;
     bool windows = 4;
+    Building building = 5;
 }
 
 message Capacity {
@@ -37,13 +38,40 @@ enum Comparison {
 }
 
 enum RoomType {
-    ANY = 0;
+    ANY_ROOM = 0;
     CLASSROOM = 1;
     LECTURE_THEATRE = 2;
     DEPARTMENTAL_ROOM = 3;
     DEPARTMENTAL_LAB = 4;
     ACTIVE_LEARNING_CLASSROOM = 5;
     TESTING_CENTRE = 6;
+}
+
+enum Building {
+    ANY_BUILDING = 0;
+    ABB = 1;
+    BSB = 2;
+    CNH = 3;
+    DSB = 4;
+    ETB = 5;
+    GH = 6;
+    GS = 7;
+    HH = 8;
+    HSC = 9;
+    ITB = 10;
+    IWC = 11;
+    JHE = 12;
+    KTH = 13;
+    LRW = 14;
+    LS = 15;
+    MCMST = 16;
+    MDCL = 17;
+    PC = 18;
+    PGCLL = 19;
+    T13 = 20;
+    T34 = 21;
+    TSH = 22;
+    UH = 23;
 }
 
 message FilterResponse {
@@ -57,4 +85,6 @@ message Room {
     bool Wheelchair = 4;
     repeated string Photos = 5;
     bool Windows = 6;
+    Building Building = 7;
+    string RoomNumber = 8;
 }

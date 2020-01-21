@@ -70,6 +70,8 @@ func Filter(ctx context.Context, req *model.FilterRequest, firestoreClient *fire
 		// TODO: Convert document to Room protobuf model automatically
 		room := model.Room{
 			ID:         data["ID"].(string),
+			Building:   model.Building(model.Building_value[data["Building"].(string)]),
+			RoomNumber: data["RoomNumber"].(string),
 			Capacity:   data["Capacity"].(int64),
 			RoomType:   model.RoomType(model.RoomType_value[data["RoomType"].(string)]),
 			Windows:    Windows,
