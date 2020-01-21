@@ -72,7 +72,7 @@ processline () {
 }
 
 # Find files changed between master and current commit
-git diff --name-only master | while read line; do
+git diff --name-only master -- | while read line; do
   processline $line
   echo "-"
 done
