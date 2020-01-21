@@ -76,7 +76,9 @@ processline () {
 git remote set-branches --add origin master
 git fetch
 
-git diff --name-only origin/master | while read line; do
+echo "Commit range ${COMMIT_RANGE}"
+
+git diff --name-only $COMMIT_RANGE | while read line; do
   processline $line
   echo "-"
 done
