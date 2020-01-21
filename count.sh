@@ -71,10 +71,10 @@ processline () {
   fi
 }
 
-git remote set-branches --add origin $TRAVIS_BRNACH
+git remote set-branches --add origin master
 git fetch
 
-git diff --name-only origin/master -- | while read line; do
+git diff --name-only origin/master | while read line; do
   processline $line
   echo "-"
 done
