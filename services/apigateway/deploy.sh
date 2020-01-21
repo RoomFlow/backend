@@ -2,7 +2,7 @@
 ### Makefile under 'deploy:' rule, which is set to the name of the component/module/service.
 ###
 echo $TRAVIS_BRANCH
-if [ $TRAVIS_BRANCH == "master" ]; then
+if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker tag ${NAME} ${ECR_URI}/${NAME}:latest
     docker images
     `aws ecr get-login --no-include-email --region us-east-2`
