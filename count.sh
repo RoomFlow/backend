@@ -31,20 +31,6 @@ build () {
     
     # Main build command.
     INCLUDE_MAKEFILE=$MKFILE make release
-
-    ### Slack notification per makefile build.
-    ### Useful if you use slack. It will notify build status/information for each makefile.
-    ### Modify accordingly.
-    ###
-    # STATUS=FAILED
-    # 
-    # if [ $? -eq 0 ]; then
-    #     STATUS=SUCCESS
-    # fi
-    #
-    # SLACK_URL=`echo "https://hooks.slack.com/services/xxxx/yyyy/zzzzzzzzzzzzz"`
-    # PAYLOAD=`printf '{"text":"\`#%s\` %s\n\`\`\`\nBuildInput: %s\nMakefile: %s\nBranch: %s\nCommitRange: %s\nStatus: %s\n\`\`\`"}' "$CIRCLE_BUILD_NUM" "$CIRCLE_BUILD_URL" "$DIRNAME" "$MKFILE_FULL" "$CIRCLE_BRANCH" "$COMMIT_RANGE" "$STATUS"`
-    # curl -X POST -d "payload=${PAYLOAD}" $SLACK_URL
    
     # Add item to our list of built makefiles.
     BUILT=`echo "${BUILT};${MKFILE_FULL}"`
@@ -85,7 +71,8 @@ processline () {
   fi
 }
 
-git diff --name-only origin/HEAD $TRAVIS_COMMIT | while read line; do
+# Find files changed between master and current commit
+git diff --name-only origin/master $TRAVIS_COMMIT | while read line; do
   processline $line
   echo "-"
 done
