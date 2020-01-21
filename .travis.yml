@@ -4,7 +4,6 @@ go:
   - 1.13.x
 
 install:
-  - pip install --user awscli
   - make protoc_install
   
 before_script:
@@ -12,6 +11,3 @@ before_script:
 
 script:
   - make build
-
-after_success:
-  - ./build.sh

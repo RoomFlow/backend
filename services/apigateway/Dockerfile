@@ -1,32 +1,14 @@
-############################
-# STEP 1 build executable binary
-############################
-FROM golang:alpine AS builder
-
-WORKDIR /go/src/github.com/RoomFlow/backend/services/apigateway
-
-RUN set -ex \
-    && apk update \
-    && apk add --no-cache git
-
-COPY services/apigateway .
-
-# Copy common files to container
-COPY pkg /go/src/github.com/RoomFlow/backend/pkg
-
-RUN go get -d -v
-
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o /go/bin/main-alpine
-
-############################
-# STEP 2 build a small image
-############################
+# Start from golang:1.13-alpine base image
 FROM alpine
 
 # Set the Current Working Directory inside the container
 WORKDIR /go/src/github.com/RoomFlow/backend/services/apigateway
 
-COPY --from=builder /go/bin/main-alpine ./main-alpine
+# Copy the source from the current directory to the Working Directory inside the container
+COPY services/apigateway/main-alpine ./main-alpine
+
+# Copy common files to container
+COPY pkg /go/src/github.com/RoomFlow/backend/pkg
 
 # Copy apigateway certs to container
 COPY internal/certs/apigateway ./certs
