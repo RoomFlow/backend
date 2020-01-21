@@ -9,8 +9,8 @@ import (
 	"google.golang.org/api/option"
 	"google.golang.org/api/sheets/v4"
 
-	models "github.com/RoomFlow/backend/pkg/models"
 	config "github.com/RoomFlow/backend/pkg/config"
+	models "github.com/RoomFlow/backend/pkg/models"
 )
 
 // FetchRoomData fetches room data from McMaster room directory
@@ -44,6 +44,15 @@ func FetchRoomData() []models.Room {
 	for _, row := range resp.Values {
 		// Some entries have "/" which breaks the addition of the document in firestore
 		ID := strings.ReplaceAll(row[0].(string), "/", "-")
+
+		// Split ID into two parts between the space ex: "BSB 233" -> ["BSB", "233"]
+		idArr := strings.SplitN(ID, " ", 2)
+
+		// Building part of ID split
+		Building := idArr[0]
+
+		// RoomNumber part of ID split
+		RoomNumber := idArr[1]
 
 		// Convert capacity string to int
 		Capacity, err := strconv.Atoi(row[7].(string))
@@ -82,6 +91,8 @@ func FetchRoomData() []models.Room {
 		// Create room struct
 		roomData := models.Room{
 			ID:         ID,
+			Building:   Building,
+			RoomNumber: RoomNumber,
 			RoomType:   RoomType,
 			Capacity:   Capacity,
 			Wheelchair: Wheelchair,

@@ -1,0 +1,36 @@
+{
+    "AWSEBDockerrunVersion": 2,
+    "containerDefinitions": [
+        {
+            "name": "apigateway",
+            "image": "869701298173.dkr.ecr.us-east-2.amazonaws.com/apigateway:latest",
+            "memory": 128,
+            "links": [
+                "search"
+            ],
+            "environment": [
+                {
+                    "name": "SEARCH_ENDPOINT",
+                    "value": "search:10001"
+                }
+            ],
+            "portMappings": [
+                {
+                    "hostPort": 443,
+                    "containerPort": 443
+                }
+            ]
+        },
+        {
+            "name": "search",
+            "image": "869701298173.dkr.ecr.us-east-2.amazonaws.com/search:latest",
+            "memory": 128,
+            "portMappings": [
+                {
+                    "hostPort": 10001,
+                    "containerPort": 10001
+                }
+            ]
+        }
+    ]
+}

@@ -56,6 +56,10 @@ func BuildQuery(collection *firestore.CollectionRef, filter *model.Filter) (fire
 				fieldValue = fieldValue.(model.RoomType).String()
 			}
 
+			if name == "Building" {
+				fieldValue = fieldValue.(model.Building).String()
+			}
+
 			// Here we check if the query was already initialized for the first time
 			if !queryInitialized {
 				query = collection.Where(name, comparison, fieldValue)
