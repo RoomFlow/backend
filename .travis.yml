@@ -9,7 +9,6 @@ install:
   
 before_script:
   - make protoc
-  - go get -d -v
 
 script:
   - make build

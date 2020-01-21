@@ -14,6 +14,8 @@ COPY services/apigateway .
 # Copy common files to container
 COPY pkg /go/src/github.com/RoomFlow/backend/pkg
 
+RUN go get -d -v
+
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o /go/bin/main-alpine
 
 ############################
