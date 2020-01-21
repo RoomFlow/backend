@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # This is the list of all makefiles that we've already built. We don't include the 
 # root makefile by default.
 BUILT=`readlink -e ${PWD}/Makefile`

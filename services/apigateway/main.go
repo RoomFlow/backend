@@ -24,7 +24,7 @@ func main() {
 	mux.Handle("/", gateway)
 
 	// TODO: Enable cors only for our frontend
-	handler := cors.Default().Handler(mux)
+	handler := cors.AllowAll().Handler(mux)
 
 	log.Printf("Apigateway deployed on port %s\n", config.ApigatewayPort)
 
