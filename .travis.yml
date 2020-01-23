@@ -17,6 +17,7 @@ before_script:
   - make protoc # Generate proto files for go services
 
 script:
+  - npm run --prefix services/firebase/functions lint
   - ./build.sh # Build go binaries, docker containers, and then deploy if on master
 
 after_success:

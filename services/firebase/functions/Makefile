@@ -5,8 +5,8 @@ MODULE = firebase/functions
 custom: install deploy
 
 install:
-	cd $(BASE)/services/$(MODULE) && npm install
+	npm --prefix services/$(MODULE) install
 
 deploy:
-	@chmod +x $(BASE)/services/$(MODULE)/deploy.sh
-	$(BASE)/services/$(MODULE)/deploy.sh
+	@chmod +x $(BASE)/scripts/firebase_deploy.sh
+	NAME=$(MODULE) $(BASE)/scripts/firebase_deploy.sh
