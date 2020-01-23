@@ -3,6 +3,7 @@ syntax="proto3";
 package search;
 
 import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
 
 service Search {
     rpc Filter(FilterRequest) returns (FilterResponse) {
@@ -87,4 +88,8 @@ message Room {
     bool Windows = 6;
     Building Building = 7;
     string RoomNumber = 8;
+    string Light = 9;
+    bool Motion = 10;
+    string Sound = 11;
+    google.protobuf.Timestamp Timestamp = 12;
 }

@@ -1,14 +1,12 @@
- # Go parameters
+# Go parameters
 GOCMD=go
 GOBUILD=$(GOCMD) build
 GOCLEAN=$(GOCMD) clean
 
-build: build_apigateway build_usermanagement build_search build_schedule
+# This included makefile should define the 'custom' target rule which is called here.
+include $(INCLUDE_MAKEFILE)
 
-buildLinux:
-	cd services/apigateway && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o ./main-alpine
-	cd services/search && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o ./main-alpine
-	cd services/usermanagement && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o ./main-alpine
+build: build_apigateway build_usermanagement build_search build_schedule
 
 build_apigateway:
 	@echo "Building apigateway binary..."
@@ -35,3 +33,6 @@ protoc:
 
 protoc_install:
 	./scripts/install_protobuf.sh
+
+.PHONY: release
+release: custom 

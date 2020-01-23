@@ -1,12 +1,13 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net/http"
 
 	"github.com/RoomFlow/backend/pkg/config"
 	"github.com/RoomFlow/backend/services/apigateway/server"
-	"golang.org/x/net/context"
+	"github.com/rs/cors"
 )
 
 func main() {
@@ -17,16 +18,26 @@ func main() {
 	}
 
 	// Create a new ServeMux.
-	serveMux := http.NewServeMux()
+	mux := http.NewServeMux()
 
 	// Registers the handler for the given pattern.
-	serveMux.Handle("/", gateway)
+	mux.Handle("/", gateway)
+
+	// TODO: Enable cors only for our frontend
+	handler := cors.AllowAll().Handler(mux)
 
 	log.Printf("Apigateway deployed on port %s\n", config.ApigatewayPort)
 
+	go func() {
+		err = http.ListenAndServe(":8080", handler)
+		if err != nil {
+			log.Fatalf("Error creating an HTTPS connection : %v", err)
+		}
+	}()
+
 	// listens on the TCP network address and then calls
 	// Serve with handler to handle requests on incoming HTTPS connections.
-	err = http.ListenAndServeTLS(config.ApigatewayPort, config.SSLCertPath(config.ApigatewayName), config.SSLKeyPath(config.ApigatewayName), serveMux)
+	err = http.ListenAndServeTLS(config.ApigatewayPort, config.SSLCertPath(config.ApigatewayName), config.SSLKeyPath(config.ApigatewayName), handler)
 	if err != nil {
 		log.Fatalf("Error creating an HTTPS connection : %v", err)
 	}

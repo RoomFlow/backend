@@ -4,6 +4,13 @@ import * as admin from 'firebase-admin';
 admin.initializeApp();
 const db = admin.firestore();
 
+interface Update {
+    timestamp?: Date;
+    motion?: Boolean;
+    light?: String;
+    sound?: String;
+}
+
 /**
  * Background Cloud Function to be triggered by Pub/Sub.
  * This function gets executed when telemetry data gets
@@ -20,17 +27,21 @@ exports.telemetryToFirestore = functions.pubsub.topic('atest-pub').onPublish((me
     }
 
     const { room, content } = telemetry;
+    const { timestamp, motion, sound, light } = content;
     // const { deviceId } = attributes;
 
-    // Add telemetry data to new document in collection of same name as room
-    db.collection(room).add({
-        timestamp: new Date(content.timestamp * 1000),
-        motion: content.motion,
-    }).then((writeResult) => {
-        console.log({ 'result': 'Message with ID: ' + writeResult.id + ' added.' });
-        return;
-    }).catch((err) => {
-        console.log(err);
-        return;
+    const updateObj: Update = {};
+
+    if (timestamp) updateObj.timestamp = new Date(timestamp * 1000);
+    if (motion) updateObj.motion = motion;
+    if (light) updateObj.light = light;
+    if (sound) updateObj.sound = sound;
+
+    db.collection("rooms").doc(room).update(updateObj)
+    .then(() => {
+        console.log("Document successfully updated!");
+    })
+    .catch((error) => {
+        console.error("Error updating document: ", error);
     });
 });
