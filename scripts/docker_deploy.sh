@@ -9,8 +9,6 @@ if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; th
     rc=$?; if [ $rc -ne 0 ]; then exit $rc; fi
 
     docker images
-
-    `aws ecr get-login --no-include-email --region us-east-2`
     
     docker push ${ECR_URI}/${NAME}:latest
     rc=$?; if [ $rc -ne 0 ]; then exit $rc; fi
