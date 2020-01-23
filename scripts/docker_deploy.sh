@@ -4,11 +4,16 @@
 ### Makefile under 'deploy:' rule, which is set to the name of the component/module/service.
 ###
 
-if [ "$TRAVIS_BRANCH" == "master" ]; then
+if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     docker tag ${NAME} ${ECR_URI}/${NAME}:latest
+    rc=$?; if [ $rc -ne 0 ]; then exit $rc; fi
+
     docker images
+
     `aws ecr get-login --no-include-email --region us-east-2`
+    
     docker push ${ECR_URI}/${NAME}:latest
+    rc=$?; if [ $rc -ne 0 ]; then exit $rc; fi
 else
     echo "Skipping deploy because not on master branch"
 fi
