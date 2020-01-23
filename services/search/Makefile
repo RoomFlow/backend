@@ -1,5 +1,5 @@
 BASE = $(CURDIR)
-MODULE = apigateway
+MODULE = search
 
 # The rule that is called by our root Makefile during CI builds.
 custom: buildLinux docker deploy

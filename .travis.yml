@@ -4,14 +4,13 @@ go:
   - 1.13.x
 
 install:
-  - pip install --user awscli
-  - make protoc_install
+  - pip install --user awscli # Install awscli
+  - make protoc_install # Install protoc
+  - curl -sL https://firebase.tools | bash # Install firebae cli
   
 before_script:
-  - make protoc
+  - make protoc # Generate proto files for go services
+  - cd services/firebase/functions && npm run lint # Run linter to make sure deploy doesn't fail
 
 script:
-  - make build
-
-after_success:
-  - ./build.sh
+  - ./build.sh # Build go binaries, docker containers, and then deploy if on master

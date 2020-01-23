@@ -5,12 +5,15 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"time"
 
 	"cloud.google.com/go/firestore"
 	"google.golang.org/api/iterator"
 
 	model "github.com/RoomFlow/backend/pkg/proto/search"
 	"github.com/RoomFlow/backend/services/search/helpers"
+	"github.com/golang/protobuf/ptypes"
+	"github.com/golang/protobuf/ptypes/timestamp"
 )
 
 // Filter takes the inputted filters and queries firestore. Returns array of rooms based on filters
@@ -67,6 +70,29 @@ func Filter(ctx context.Context, req *model.FilterRequest, firestoreClient *fire
 			Photos = s
 		}
 
+		var Sound string
+		if val, ok := data["sound"]; ok {
+			Sound = val.(string)
+		}
+
+		var Light string
+		if val, ok := data["light"]; ok {
+			Light = val.(string)
+		}
+
+		var Motion bool
+		if val, ok := data["motion"]; ok {
+			Motion = val.(bool)
+		}
+
+		var Timestamp *timestamp.Timestamp
+		if val, ok := data["timestamp"]; ok {
+			Timestamp, err = ptypes.TimestampProto(val.(time.Time))
+			if err != nil {
+				return nil, err
+			}
+		}
+
 		// TODO: Convert document to Room protobuf model automatically
 		room := model.Room{
 			ID:         data["ID"].(string),
@@ -77,6 +103,10 @@ func Filter(ctx context.Context, req *model.FilterRequest, firestoreClient *fire
 			Windows:    Windows,
 			Wheelchair: Wheelchair,
 			Photos:     Photos,
+			Sound:      Sound,
+			Light:      Light,
+			Motion:     Motion,
+			Timestamp:  Timestamp,
 		}
 
 		// Append document to resulting array

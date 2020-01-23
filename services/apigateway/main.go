@@ -1,9 +1,9 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net/http"
-	"context"
 
 	"github.com/RoomFlow/backend/pkg/config"
 	"github.com/RoomFlow/backend/services/apigateway/server"
@@ -27,6 +27,13 @@ func main() {
 	handler := cors.AllowAll().Handler(mux)
 
 	log.Printf("Apigateway deployed on port %s\n", config.ApigatewayPort)
+
+	go func() {
+		err = http.ListenAndServe(":8080", handler)
+		if err != nil {
+			log.Fatalf("Error creating an HTTPS connection : %v", err)
+		}
+	}()
 
 	// listens on the TCP network address and then calls
 	// Serve with handler to handle requests on incoming HTTPS connections.
