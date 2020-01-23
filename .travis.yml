@@ -3,6 +3,9 @@ language: go
 go:
   - 1.13.x
 
+before_install:
+  - openssl aes-256-cbc -K $encrypted_f34ea8259118_key -iv $encrypted_f34ea8259118_iv -in internal/secrets/firebase-credentials.json.enc -out internal/secrets/firebase-credentials.json -d
+
 install:
   - pip install --user awscli # Install awscli
   - make protoc_install # Install protoc

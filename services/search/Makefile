@@ -12,5 +12,5 @@ docker:
 	docker build -f Dockerfile.$(MODULE) --rm -t $(MODULE):latest .
 
 deploy:
-	@chmod +x $(BASE)/services/$(MODULE)/deploy.sh
-	NAME=$(MODULE) $(BASE)/services/$(MODULE)/deploy.sh
+	@chmod +x $(BASE)/scripts/docker_deploy.sh
+	NAME=$(MODULE) $(BASE)/scripts/docker_deploy.sh

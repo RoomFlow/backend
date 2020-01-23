@@ -2,6 +2,7 @@
 **/*.pb.go
 **/*.swagger.json
 **/secrets/*
+!**/secrets/*.enc
 main
 main-alpine
 .DS_Store
