@@ -10,7 +10,6 @@ install:
   
 before_script:
   - make protoc # Generate proto files for go services
-  - cd services/firebase/functions && npm run lint # Run linter to make sure deploy doesn't fail
 
 script:
   - ./build.sh # Build go binaries, docker containers, and then deploy if on master
