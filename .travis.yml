@@ -16,3 +16,7 @@ before_script:
 
 script:
   - ./build.sh # Build go binaries, docker containers, and then deploy if on master
+
+after_success:
+  - docker images
+  - docker ps -a

@@ -9,4 +9,6 @@ if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker images
     `aws ecr get-login --no-include-email --region us-east-2`
     docker push ${ECR_URI}/${NAME}:latest
+else
+    echo "Skipping deploy because not on master branch"
 fi
