@@ -12,7 +12,8 @@ install:
   - curl -sL https://firebase.tools | bash # Install firebae cli
   
 before_script:
-  - aws ecr get-login --no-include-email --region us-east-2 # Login to ecr
+  - chmod +x scripts/ecr_login.sh
+  - ./scripts/ecr_login.sh
   - make protoc # Generate proto files for go services
 
 script:
